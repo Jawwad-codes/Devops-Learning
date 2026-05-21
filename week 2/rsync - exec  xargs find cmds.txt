@@ -1,0 +1,114 @@
+**Here's the complete content in clean, plain text format:**
+
+---
+
+Linux Commands & awk/sed Mastery Notes
+
+File Searching & Processing Commands
+
+ls -R
+→ Lists all files and directories recursively.
+
+find . -type f -name "*.txt"
+→ Finds all .txt files in current directory and subdirectories.
+
+find . -type f -name "*.txt" | xargs cat
+→ Displays the content of all .txt files.
+
+find . -type f -name "*.txt" | xargs cat | grep "ERROR"
+→ Shows only lines containing "ERROR" from all .txt files.
+
+find . -type f -name "*.txt" | xargs cat | grep "ERROR" | sort -k4 | uniq -f3
+→ Filters ERROR lines, sorts by 4th column, and removes duplicates (ignoring first 3 fields).
+
+find . -type f -name "*.txt" | xargs cat | grep "ERROR" | sort -k4 | uniq -f3 > errors.log
+→ Saves the cleaned ERROR logs into errors.log file.
+
+find . -type f -name "*.log" -exec cp {} ./backup \;
+→ Copies all .log files into the backup directory.
+
+find . -type f -name "*.txt" -exec rsync -R {} ./backup \;
+→ Copies all .txt files to backup while keeping original folder structure.
+
+find . -name '*.txt' | xargs wc -l
+→ Counts total lines in every .txt file and shows grand total.
+
+Real DevOps Examples
+
+1. Get high CPU processes
+ps aux | awk '$3 > 50 {print $1, $3, $11}'
+→ Shows User, CPU%, and Command for processes using more than 50% CPU.
+→ Used for server troubleshooting.
+
+2. Extract IPs from logs
+cat access.log | awk '{print $1}' | sort | uniq -c
+→ Counts how many times each IP hits the server.
+→ Used for detecting attackers and traffic analysis.
+
+3. Replace config values
+sed -i 's/PORT=3000/PORT=5000/' .env
+→ Used in deployment scripts.
+
+4. Delete empty lines from file
+sed '/^$/d' file.txt
+
+5. Print specific column from CSV
+awk -F "," '{print $2}' data.csv
+→ -F "," sets the delimiter as comma.
+
+6. Monitor logs in real-time
+tail -f app.log | awk '{print $5}'
+
+7. Find failed login attempts
+grep "Failed password" auth.log | awk '{print $1, $2, $3, $11}'
+
+Interview Questions
+
+1. Difference between awk and sed?
+awk → used for data extraction & processing (especially columns)
+sed → used for text editing (search & replace)
+
+2. How to print first column?
+awk '{print $1}' file.txt
+
+3. How to replace a word in a file?
+sed 's/old/new/g' file.txt
+
+4. How to delete a line?
+sed '3d' file.txt
+
+5. How to filter rows with condition?
+awk '$2 > 100' file.txt
+
+6. awk vs cut vs grep
+
+Tool     | Use
+---------|------------------------
+awk      | Advanced processing
+cut      | Simple column extraction
+grep     | Search text
+
+Example: cut -d " " -f1 file.txt
+
+7. How to change delimiter in awk?
+awk -F ":" '{print $1}' file.txt
+
+8. How to edit file directly with sed?
+sed -i 's/a/b/g' file.txt
+
+Pro Tip (Interview Gold)
+
+Combine tools:
+cat file.txt | grep error | awk '{print $2}' | sort | uniq
+
+Real-world pipeline:
+- Find errors
+- Extract data
+- Clean output
+
+Easy Memory Trick
+
+awk → analyze data
+sed → edit text
+
+------------------------------------------------------------------------------------------------------------
