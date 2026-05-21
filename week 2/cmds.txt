@@ -1,0 +1,378 @@
+
+
+1️⃣ File & Directory Management (Daily Use)**
+```bash
+ls          # List files
+ls -l       # Long format (permissions, size, date)
+ls -la      # Show hidden files too
+tree        # Directory tree view
+pwd         # Print working directory
+cd          # Change directory (cd -, cd ~, cd /)
+pushd /popd # Directory stack (quick switching)
+```
+
+```bash
+cp          # Copy file
+cp -r       # Copy recursively (directories)
+mv          # Move/rename
+rm          # Remove file
+rm -rf      # Force recursive remove (DANGEROUS)
+install     # Copy + set permissions/mode
+```
+
+```bash
+touch       # Create empty file or update timestamp
+stat        # Detailed file info (permissions, inode, etc.)
+file        # Detect file type
+realpath    # Resolve absolute path
+basename    # Get filename from path
+dirname     # Get directory from path
+```
+
+-------------------------------
+
+### **2️⃣ File Viewing & Reading**
+```bash
+cat         # Concatenate and print file
+tac         # Print file in reverse
+less        # Paginated viewer (best for large files)
+more        # Simple pager
+head        # First 10 lines
+tail        # Last 10 lines
+tail -f     # Follow file in real-time (logs)
+watch       # Run command repeatedly and show output
+```
+
+```bash
+nl          # Number lines
+wc          # Word/Line/Character count
+```
+
+-------------------------------
+
+### **3️⃣ File Search & Locate**
+```bash
+find        # Search files by name, size, time, type etc.
+locate      # Fast search using database
+updatedb    # Update locate database
+which       # Show full path of executable
+whereis     # Show binary + source + man pages
+type        # Show how command is interpreted (alias, builtin, etc.)
+```
+
+**Example:**
+```bash
+find /var/log -name "*.log" -mtime -1
+which docker
+```
+
+---------------------------------
+
+### **4️⃣ Permissions & Ownership**
+```bash
+chmod       # Change permissions (numeric or symbolic)
+chown       # Change owner and group
+chgrp       # Change group only
+getfacl     # Show ACLs
+setfacl     # Set ACLs
+umask       # Default permission mask for new files
+```
+
+---------------------------------
+
+### **5️⃣ User & Group Management**
+```bash
+useradd     # Create user
+usermod     # Modify user
+userdel     # Delete user
+groupadd    # Create group
+groupdel    # Delete group
+passwd      # Change password
+groups      # Show groups of user
+id          # User ID, group IDs
+whoami      # Current username
+su          # Switch user
+sudo        # Run as superuser
+```
+
+----------------------------------
+
+### **6️⃣ Package Management**
+
+**Debian/Ubuntu:**
+```bash
+apt         # Modern frontend (recommended)
+apt-get     # Traditional (scripts)
+apt-cache   # Search package info
+dpkg        # Low-level .deb manager
+```
+
+**RHEL/CentOS/Rocky/Alma:**
+```bash
+dnf         # Modern (RHEL 8+)
+yum         # Older compatibility
+microdnf    # Minimal (containers)
+rpm         # Low-level package manager
+```
+
+-----------------------------------
+
+### **7️⃣ Process & System Monitoring**
+```bash
+ps          # Current processes
+top         # Live process monitor
+htop        # Interactive colorful top (recommended)
+atop        # Advanced performance monitor
+```
+
+```bash
+kill        # Send signal to process
+killall     # Kill by name
+pkill       # Kill by pattern
+pgrep       # Find PIDs by pattern
+nice/renice # Adjust process priority
+```
+
+```bash
+uptime      # System uptime + load average
+```
+
+---------------------------------
+
+### **8️⃣ Memory, CPU & Disk**
+```bash
+free -h     # Memory usage (human readable)
+vmstat      # Virtual memory stats
+iostat      # I/O statistics
+mpstat      # Multi-processor stats
+sar         # Historical system activity
+```
+
+```bash
+df -h       # Disk space (human)
+du -sh      # Directory size
+lsblk       # Block devices tree
+blkid       # Block device attributes (UUIDs)
+mount/umount # Mount/unmount filesystems
+findmnt     # Show mounted filesystems
+```
+
+-------------------------------------
+
+### **9️⃣ Networking (Very Important)**
+```bash
+ip a        # Show IP addresses (modern)
+ip r        # Routing table
+ip link     # Network interfaces
+```
+
+```bash
+ping        # Connectivity test
+traceroute  # Route to host
+mtr         # Ping + traceroute combined
+```
+
+```bash
+ss          # Socket statistics (replacement of netstat)
+netstat     # Network connections (older)
+lsof -i     # Files opened by network
+```
+
+```bash
+curl        # HTTP client
+wget        # Download files
+httpie      # User-friendly curl
+scp         # Secure copy
+rsync       # Efficient sync (delta transfer)
+nc          # Netcat (TCP/UDP swiss army knife)
+```
+
+-----------------------------------
+
+### **🔟 DNS & Network Debugging**
+```bash
+dig         # Best DNS lookup tool
+nslookup    # Interactive DNS
+host        # Simple DNS lookup
+resolvectl  # systemd-resolved control
+nmcli       # NetworkManager CLI
+nmtui       # Text UI for NetworkManager
+```
+
+-------------------------------------
+
+### **1️⃣1️⃣ SSH & Remote Access**
+```bash
+ssh             # Secure shell
+ssh-keygen      # Generate SSH keys
+ssh-copy-id     # Copy public key to server
+scp             # Copy files over SSH
+sftp            # Secure FTP
+rsync -avz      # Sync over SSH
+```
+
+**`~/.ssh/config`** — Host aliases, keys, proxies, etc.
+
+---------------------------------------
+
+### **1️⃣2️⃣ Environment & Shell**
+```bash
+env / printenv   # Show environment variables
+export           # Set environment variable
+unset            # Remove variable
+alias            # Create shortcut
+unalias
+source / .       # Execute script in current shell
+exec             # Replace current shell
+```
+
+-----------------------------------------
+
+### **1️⃣3️⃣ Shell Scripting Essentials**
+```bash
+bash / sh / zsh
+read             # Read user input
+select           # Menu
+trap             # Signal handling
+wait             # Wait for background jobs
+sleep
+time             # Measure execution time
+xargs            # Build arguments from input
+parallel         # Run commands in parallel
+$?               # Exit code of last command
+exit             # Exit shell/script
+```
+
+------------------------------------------
+
+### **1️⃣4️⃣ Text Processing (Most Powerful)**
+```bash
+grep            # Search text
+rg              # ripgrep (much faster)
+awk             # Pattern scanning & processing
+sed             # Stream editor (find-replace)
+cut             # Cut columns
+sort            # Sort lines
+uniq            # Remove duplicates
+tr              # Translate characters
+column          # Format into columns
+```
+
+**Classic Example:**
+```bash
+grep "ERROR" app.log | awk '{print $5}' | sort | uniq -c
+```
+
+--------------------------------------------
+
+### **1️⃣5️⃣ Archives & Compression**
+```bash
+tar -czf        # Create gzip tarball
+tar -xzf        # Extract
+gzip / gunzip
+bzip2 / bunzip2
+xz / unxz
+zip / unzip
+```
+
+----------------------------------------------------
+
+### **1️⃣6️⃣ Systemd Services**
+```bash
+systemctl status/start/stop/restart/enable/disable <service>
+journalctl -u <service> -f     # Follow logs
+journalctl -xe                 # Last errors
+```
+
+---------------------------------------------------
+
+### **1️⃣7️⃣ Logs & Debugging**
+```bash
+dmesg           # Kernel messages
+journalctl      # System logs
+logger          # Write to syslog
+last            # Last logins
+strace          # Trace system calls (very powerful)
+```
+
+----------------------------------------------------
+
+### **1️⃣8️⃣ Scheduling**
+```bash
+crontab -e      # Edit user cron
+at              # One-time job
+nohup           # Run process immune to logout
+disown          # Detach background job
+```
+
+---------------------------------------------------
+
+### **1️⃣9️⃣ Firewall & Security**
+```bash
+ufw             # Simple firewall (Ubuntu)
+firewall-cmd    # firewalld (RHEL)
+iptables        # Legacy
+nft             # Modern nftables
+getenforce / setenforce   # SELinux
+```
+
+---------------------------------------------------
+
+### **2️⃣0️⃣ Docker (Mandatory)**
+```bash
+docker build
+docker run -d --name
+docker ps / ps -a
+docker images
+docker pull / push
+docker logs -f
+docker exec -it
+docker stop / rm / rmi
+docker volume
+docker network
+docker stats
+docker inspect
+docker compose up -d
+```
+
+-------------------------------------------------
+
+### **2️⃣1️⃣ Kubernetes**
+```bash
+kubectl get all
+kubectl describe
+kubectl logs -f
+kubectl exec -it
+kubectl apply -f
+kubectl delete
+kubectl scale
+kubectl rollout status/undo
+kubectl port-forward
+kubectl config use-context
+```
+
+```bash
+helm repo add
+helm install / upgrade / rollback / list
+```
+
+-------------------------------------------------
+
+### **2️⃣2️⃣ Cloud CLIs**
+- **AWS**: `aws` (ec2, s3, iam, eks, cloudwatch…)
+- **Azure**: `az` (vm, aks, storage…)
+- **GCP**: `gcloud` + `gsutil`
+
+--------------------------------------------------
+
+### **2️⃣3️⃣ CI/CD & IaC**
+```bash
+git clone /pull /push /fetch /merge /rebase /stash /log /diff
+terraform init/plan/apply/destroy
+ansible-playbook
+
+
+**Final Truth** (Unchanged because it's perfect):
+> **DevOps is NOT about memorizing commands**  
+> **DevOps is about knowing WHAT command to use WHEN**
+
