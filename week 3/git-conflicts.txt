@@ -1,0 +1,197 @@
+# Git Conflict Resolution Guide
+
+## Why Conflicts Occur
+
+Conflicts happen when Git can't automatically merge changes from different branches because they modify the same part of a file in incompatible ways. Common scenarios:
+
+- Two developers edit the same line in a file
+- One person deletes a file while another modifies it
+- One person renames a file while another edits it
+- Merging long-lived branches with divergent histories
+
+## Understanding Conflict Markers
+
+When a conflict occurs, Git adds special markers to the file:
+
+```
+<<<<<<< HEAD
+Your current branch's version of the code
+=======
+The incoming branch's version of the code
+>>>>>>> branch-name
+```
+
+- `<<<<<<< HEAD` - Marks the start of your current branch's changes
+- `=======` - Separates your changes from the incoming changes
+- `>>>>>>> branch-name` - Marks the end of the incoming branch's changes
+
+---
+
+## HANDS-ON: Create & Resolve a Merge Conflict
+
+### Step 1: Setup
+```bash
+mkdir git-conflict-lab
+cd git-conflict-lab
+git init
+echo "Hello World" > greeting.txt
+git add greeting.txt
+git commit -m "Initial commit"
+```
+
+### Step 2: Create two branches
+```bash
+git checkout -b feature-a
+echo "Hello from Feature A" > greeting.txt
+git add greeting.txt
+git commit -m "Feature A changes"
+
+git checkout main
+git checkout -b feature-b
+echo "Hello from Feature B" > greeting.txt
+git add greeting.txt
+git commit -m "Feature B changes"
+```
+
+### Step 3: Trigger the conflict
+```bash
+git checkout main
+git merge feature-a  # Works fine
+git merge feature-b  # CONFLICT!
+```
+
+### Step 4: Resolve with VS Code
+1. Open `greeting.txt` in VS Code
+2. You'll see conflict markers
+3. Choose: Keep both, pick one side, or manually edit
+4. Delete the markers (`<<<<<<<`, `=======`, `>>>>>>>`)
+5. Save the file
+
+### Step 5: Complete the merge
+```bash
+git add greeting.txt
+git commit -m "Resolved merge conflict between feature-a and feature-b"
+```
+
+### Alternative: CLI Resolution
+```bash
+# Keep main's version
+git checkout --ours greeting.txt
+git add greeting.txt
+
+# Or keep feature-b's version
+git checkout --theirs greeting.txt
+git add greeting.txt
+
+# Or use merge tool
+git mergetool
+```
+
+---
+
+# Team Git Conflict Resolution Guide (Do's & Don'ts)
+
+## ✅ DO's
+
+### Before Merging
+- **Do** run `git status` frequently to know where you are
+- **Do** commit or stash local changes before pulling/merging
+- **Do** ensure your local main branch is up-to-date: `git pull origin main`
+- **Do** review what changed: `git log --oneline --graph --all`
+
+### During Conflict Resolution
+- **Do** use `git diff` to see conflicts clearly
+- **Do** communicate with teammates when resolving shared files
+- **Do** test the code after resolving conflicts
+- **Do** use `git mergetool` with GUI tools (VS Code, Beyond Compare, Meld)
+- **Do** resolve one conflict at a time in larger files
+
+### After Resolution
+- **Do** verify the merged code compiles/runs
+- **Do** run your test suite before pushing
+- **Do** use descriptive commit messages: `git commit -m "Resolve conflict in auth.js: keep both login methods"`
+
+### Prevention Strategies
+- **Do** keep branches short-lived (1-3 days max)
+- **Do** pull/rebase frequently: `git pull --rebase origin main`
+- **Do** break large features into smaller, independent PRs
+- **Do** use feature toggles instead of long-lived branches
+- **Do** communicate big changes via team channels
+- **Do** establish code ownership areas when possible
+
+## ❌ DON'Ts
+
+### Critical Mistakes
+- **Don't** resolve conflicts without understanding both changes
+- **Don't** use `git push --force` after merging (rewrites history)
+- **Don't** blindly use `git checkout --ours/--theirs` without review
+- **Don't** ignore conflict markers and commit them (breaks the build)
+
+### Bad Practices
+- **Don't** wait days to merge feature branches
+- **Don't** make massive changes in a single branch
+- **Don't** edit the same file sections as teammates without coordination
+- **Don't** skip pulling latest changes before starting work
+- **Don't** use `git merge --abort` as a first resort (understand first)
+- **Don't** resolve conflicts by deleting teammates' code without discussion
+
+### Process Anti-Patterns
+- **Don't** have multiple people reformatting the same files
+- **Don't** commit generated files (package-lock.json can be an exception)
+- **Don't** use binary files for collaborative editing (images, Word docs)
+- **Don't** ignore `.gitignore` for build artifacts
+
+## 🔧 Useful Commands Cheat Sheet
+
+```bash
+# Before merge
+git fetch origin
+git diff main..feature/x          # See differences before merging
+
+# During conflict
+git status                         # List conflicted files
+git diff --name-only --diff-filter=U  # Show only unresolved files
+git mergetool                      # Launch configured merge tool
+
+# Abort if needed
+git merge --abort                  # Cancel merge, return to previous state
+
+# After resolution
+git diff --cached                  # Review staged resolutions
+git log --merge                    # See conflicting commits
+```
+
+## 📋 Team Agreement Template
+
+Copy this section into your team docs:
+
+```markdown
+## Our Conflict Resolution Protocol
+
+1. **First response**: Run `git status` to identify conflicted files
+2. **Communication**: @mention the other contributor(s) in Slack/Teams
+3. **Analysis**: Review both versions using `git diff`
+4. **Resolution**: Keep both changes when possible, manually edit
+5. **Validation**: Run tests locally
+6. **Commit**: Use message format: `resolve(scope): brief description`
+7. **Push**: Normal push (no force)
+
+**Escalation**: If conflict involves >3 people or >5 files → schedule 5-min sync
+```
+
+---
+
+## 🎯 Quick Reference: Conflict by File Type
+
+| File Type | Strategy |
+|-----------|----------|
+| Source code | Keep both, then fix syntax |
+| Configuration | Merge carefully, test after |
+| Documentation | Keep both, manual edit |
+| Package.json | Regenerate with tool (`npm install`) |
+| Binary images | Choose one version, rename |
+| Lock files | Delete and regenerate |
+
+---
+
+**Remember**: Conflicts are normal, not failures. Good communication + frequent integration = fewer conflicts. Practice with small, safe merges to build confidence!

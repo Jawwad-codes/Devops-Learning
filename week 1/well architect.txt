@@ -1,0 +1,161 @@
+
+
+☁️ 6 Pillars of AWS Well-Architected Framework
+
+---
+
+# 1. 🛡️ Security
+
+### 👉 Meaning:
+
+Keep your system **safe from hackers and unauthorized access**
+
+### 🔹 How:
+
+- IAM roles & policies
+- Encryption
+- Security groups
+
+### 📌 Real Example:
+
+- Only admin can access EC2 via SSH
+- Database password is encrypted
+
+👉 Think:
+
+> Who can access what?
+
+---
+
+# 2. ⚙️ Operational Excellence
+
+### 👉 Meaning:
+
+Run and manage your system **smoothly**
+
+### 🔹 How:
+
+- Automation (CI/CD)
+- Monitoring (CloudWatch)
+- Logging
+
+### 📌 Real Example:
+
+- Auto deploy app using GitHub Actions
+- Alerts if server goes down
+
+👉 Think:
+
+> How well you operate your system daily
+
+---
+
+# 3. 🏗️ Reliability
+
+### 👉 Meaning:
+
+System should **not fail**, and if it fails → recover quickly
+
+### 🔹 How:
+
+- Auto Scaling
+- Multi-AZ deployment
+- Backups
+
+### 📌 Real Example:
+
+- If one server crashes → another starts automatically
+- RDS backup restores DB
+
+👉 Think:
+
+> System always available
+
+---
+
+# 4. ⚡ Performance Efficiency
+
+### 👉 Meaning:
+
+Use resources **efficiently and fast**
+
+### 🔹 How:
+
+- Right instance type
+- Caching (Redis)
+- Load balancing
+
+### 📌 Real Example:
+
+- Use CloudFront CDN for faster website
+- Upgrade instance when traffic increases
+
+👉 Think:
+
+> Fast and optimized system
+
+---
+
+# 5. 💰 Cost Optimization
+
+### 👉 Meaning:
+
+Don’t waste money
+
+### 🔹 How:
+
+- Use Spot instances
+- Turn off unused resources
+- Right sizing
+
+### 📌 Real Example:
+
+- Stop EC2 at night
+- Use cheaper storage (S3 Glacier)
+
+👉 Think:
+
+> Spend smartly
+
+---
+
+# 6. 🌱 Sustainability
+
+### 👉 Meaning:
+
+Use cloud in an **environment-friendly way**
+
+### 🔹 How:
+
+- Efficient resources
+- Reduce waste
+- Use managed services
+
+### 📌 Real Example:
+
+- Use serverless (Lambda) instead of always-running servers
+- Reduce unused instances
+
+👉 Think:
+
+> Save energy + environment
+
+---
+
+# 🧠 Easy Trick to Remember
+
+👉 **S O R P C S**
+
+- Security
+- Operational Excellence
+- Reliability
+- Performance Efficiency
+- Cost Optimization
+- Sustainability
+
+---
+
+# 🔥 Simple Interview Answer
+
+> “The AWS Well-Architected Framework has six pillars: Security, Operational Excellence, Reliability, Performance Efficiency, Cost Optimization, and Sustainability. These help design secure, reliable, efficient, and cost-effective cloud architectures.”
+

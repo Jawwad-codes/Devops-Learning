@@ -1,0 +1,44 @@
+## **1. DNS Record Types**
+
+| Record Type                | Purpose                                                          | Example                                        |
+| -------------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
+| **A (Address)**            | Maps a domain to an **IPv4 address**                             | `example.com → 192.168.1.1`                    |
+| **AAAA**                   | Maps a domain to an **IPv6 address**                             | `example.com → 2001:0db8:85a3::8a2e:0370:7334` |
+| **CNAME (Canonical Name)** | Maps one domain to another domain name (alias)                   | `www.example.com → example.com`                |
+| **MX (Mail Exchange)**     | Directs email to mail servers                                    | `example.com → mailserver.example.com`         |
+| **NS (Name Server)**       | Specifies authoritative name servers for a domain                | `example.com → ns1.provider.com`               |
+| **TXT**                    | Holds arbitrary text; often for **verification** or **SPF/DKIM** | `v=spf1 include:_spf.google.com ~all`          |
+
+---
+
+## **2. TTL (Time To Live) and DNS Caching**
+
+* **TTL**: Time in seconds a DNS record is cached by clients/resolvers.
+
+  * Example: `TTL=3600` → record cached for 1 hour.
+* **Implications**:
+
+  * Low TTL: Changes propagate quickly, but increases query load.
+  * High TTL: Reduces DNS query load, but changes propagate slowly.
+* **DNS Caching**:
+
+  * Recursive resolvers and client machines store DNS responses until TTL expires.
+  * Can lead to old IPs being used if TTL is long.
+
+---
+
+## **3. AWS Route 53 Routing Policies**
+
+| Policy       | Purpose                                                   | Example Use Case                                             |
+| ------------ | --------------------------------------------------------- | ------------------------------------------------------------ |
+| **Simple**   | Single resource responds                                  | Standard website pointing to one server                      |
+| **Weighted** | Distribute traffic among multiple resources by percentage | 70% to Server A, 30% to Server B for load testing            |
+| **Latency**  | Route users to the region with **lowest latency**         | Global website serving users from closest AWS region         |
+| **Failover** | Route traffic to **secondary resource** if primary fails  | Disaster recovery setup; primary EC2 fails → route to backup |
+
+**Notes on Route 53 Behavior:**
+
+* Health checks are required for failover and can be optionally used for weighted and latency policies.
+* Weighted and latency policies can be combined with failover for complex routing setups.
+* TTL settings in Route 53 affect how quickly changes propagate globally.
+

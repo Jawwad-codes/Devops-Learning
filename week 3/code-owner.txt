@@ -1,0 +1,155 @@
+
+
+# 🧠 What is CODEOWNERS in GitHub?
+
+👉 It is a file that defines:
+
+> “Who must approve changes in specific parts of the code.”
+
+---
+
+# 🏠 Simple analogy
+
+Think of your project like a house:
+
+```text id="c1"
+Kitchen → Ali owns it
+Bathroom → Sara owns it
+Server code → DevOps team owns it
+```
+
+So if someone changes:
+
+* kitchen → Ali must review
+* server → DevOps must approve
+
+---
+
+# 📄 Where CODEOWNERS file is
+
+You create this file:
+
+```text id="c2"
+.github/CODEOWNERS
+```
+
+or:
+
+```text id="c3"
+CODEOWNERS
+```
+
+---
+
+# ✏️ Basic example
+
+```text id="c4"
+# everything in repo
+*       @jawwad-codes
+
+# frontend folder
+/frontend/   @frontend-team
+
+# backend folder
+/backend/    @backend-team
+
+# CI/CD files
+.github/workflows/   @devops-team
+```
+
+---
+
+# 🧠 What this means
+
+| Path            | Owner         |
+| --------------- | ------------- |
+| all files `*`   | jawwad-codes  |
+| frontend folder | frontend-team |
+| backend folder  | backend-team  |
+| GitHub Actions  | devops-team   |
+
+---
+
+# 🚀 What happens when PR is created
+
+If someone changes:
+
+```text id="c5"
+/backend/app.js
+```
+
+👉 GitHub automatically:
+
+✔ requests review from backend team
+✔ blocks merge until they approve (if required)
+
+---
+
+# 🔒 Why CODEOWNERS is useful
+
+## ✔ Code safety
+
+No one can randomly change critical code
+
+## ✔ Clear responsibility
+
+Everyone knows who owns what
+
+## ✔ Faster reviews
+
+PR goes directly to right people
+
+## ✔ Used in real companies (VERY IMPORTANT)
+
+---
+
+# ⚙️ Real DevOps flow
+
+```text id="c6"
+Developer creates PR
+      ↓
+GitHub checks CODEOWNERS
+      ↓
+Auto-assigns reviewers
+      ↓
+Approval required
+      ↓
+Merge allowed
+```
+
+---
+
+# 🔥 Example for your DevOps learning repo
+
+```text id="c7"
+*                @you
+todo.py          @you
+.github/         @devops-team
+```
+
+---
+
+# ⚠️ Important rules
+
+✔ Must be in `.github/` or root
+✔ Uses GitHub usernames or teams
+✔ Supports folders + files
+✔ Works only with PRs (not direct push)
+
+---
+
+# 🧠 One-line summary
+
+👉 CODEOWNERS = a file that tells GitHub who must review which part of the code before merging.
+
+---
+
+# 👍 If you want next step
+
+I can show you:
+
+✅ how CODEOWNERS blocks a PR (real demo flow)
+✅ how companies use it in microservices
+✅ or combine it with CI/CD + branch protection rules
+
+Just tell me 👍
